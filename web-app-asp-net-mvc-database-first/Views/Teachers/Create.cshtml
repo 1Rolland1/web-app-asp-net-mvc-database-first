@@ -1,0 +1,12 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@model TeacherViewModel
+
+<h3>Преподаватель</h3>
+
+@using (Html.BeginForm("Create", "Teachers", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.EditorForModel()
+
+    <input type="submit" value="Сохранить" />
+    @Html.ActionLink("Отменить", "Index", "Teachers")
+}

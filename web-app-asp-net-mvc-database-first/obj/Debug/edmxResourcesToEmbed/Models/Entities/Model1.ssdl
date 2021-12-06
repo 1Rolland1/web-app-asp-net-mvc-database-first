@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище TimetableModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NumberOfStudents" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LessonGroups">
+    <Key>
+      <PropertyRef Name="Lesson_Id" />
+      <PropertyRef Name="Group_Id" />
+    </Key>
+    <Property Name="Lesson_Id" Type="int" Nullable="false" />
+    <Property Name="Group_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lessons">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="number" Type="int" Nullable="false" />
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeacherImages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Data" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar" MaxLength="100" />
+    <Property Name="DateChanged" Type="datetime" />
+    <Property Name="FileName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Teachers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Sex" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_LessonGroups_dbo_Groups_Group_Id">
+    <End Role="Groups" Type="Self.Groups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LessonGroups" Type="Self.LessonGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LessonGroups">
+        <PropertyRef Name="Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_LessonGroups_dbo_Lessons_Lesson_Id">
+    <End Role="Lessons" Type="Self.Lessons" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LessonGroups" Type="Self.LessonGroups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lessons">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LessonGroups">
+        <PropertyRef Name="Lesson_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Lessons_dbo_Teachers_TeacherId">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Lessons" Type="Self.Lessons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lessons">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_TeacherImages_dbo_Teachers_Id">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TeacherImages" Type="Self.TeacherImages" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TeacherImages">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище TimetableModelContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LessonGroups" EntityType="Self.LessonGroups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lessons" EntityType="Self.Lessons" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TeacherImages" EntityType="Self.TeacherImages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_LessonGroups_dbo_Groups_Group_Id" Association="Self.FK_dbo_LessonGroups_dbo_Groups_Group_Id">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="LessonGroups" EntitySet="LessonGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_LessonGroups_dbo_Lessons_Lesson_Id" Association="Self.FK_dbo_LessonGroups_dbo_Lessons_Lesson_Id">
+      <End Role="Lessons" EntitySet="Lessons" />
+      <End Role="LessonGroups" EntitySet="LessonGroups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Lessons_dbo_Teachers_TeacherId" Association="Self.FK_dbo_Lessons_dbo_Teachers_TeacherId">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="Lessons" EntitySet="Lessons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_TeacherImages_dbo_Teachers_Id" Association="Self.FK_dbo_TeacherImages_dbo_Teachers_Id">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="TeacherImages" EntitySet="TeacherImages" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

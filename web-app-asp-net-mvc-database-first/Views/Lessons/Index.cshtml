@@ -1,0 +1,58 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@using web_app_asp_net_mvc_database_first.Extensions
+@model List<LessonViewModel>
+
+<h3>Пары</h3>
+
+@Html.ActionLink("Добавить запись", "Create", "Lessons")
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Номер пары
+            </th>
+            <th>
+                Предмет
+            </th>
+            <th>
+                Группа(ы)
+            </th>
+            <th>
+                Преподаватель
+            </th>
+            <th>
+                Фото преподавателя
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lesson in Model)
+        {
+            <tr>
+                <td>
+                    @lesson.Number
+                </td>
+                <td>
+                    @lesson.Name
+                </td>
+                <td>
+                    @string.Join(", ", lesson.Groups.Select(x => $"{x.GroupName}"))
+                </td>
+                <td>
+                    @lesson.Teacher.Name
+                </td>
+                <td>
+                    <img src="/Teachers/GetImage/@lesson.TeacherId" style="max-width: 50px; max-height: 100px;" />
+                </td>
+                <td>
+                    @Html.ActionLink("Удалить", "Delete", "Lessons", new { id = lesson.Id }, new { })
+                    @Html.ActionLink("Изменить", "Edit", "Lessons", new { id = lesson.Id }, new { })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

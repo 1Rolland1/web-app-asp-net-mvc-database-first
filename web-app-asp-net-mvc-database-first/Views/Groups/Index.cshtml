@@ -1,0 +1,40 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@using web_app_asp_net_mvc_database_first.Extensions
+@model List<GroupViewModel>
+
+<h3>Группы</h3>
+
+@Html.ActionLink("Добавить запись", "Create", "Groups")
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Группа
+            </th>
+            <th>
+                Количество студентов
+            </th>            
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+        <tr>
+            <td>
+                @group.GroupName
+            </td>
+            <td>
+                @group.NumberOfStudents
+            </td>                       
+            <td>
+                @Html.ActionLink("Удалить", "Delete", "Groups", new { id = group.Id }, new { })
+                @Html.ActionLink("Изменить", "Edit", "Groups", new { id = group.Id }, new { })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

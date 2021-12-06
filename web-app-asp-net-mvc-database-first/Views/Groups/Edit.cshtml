@@ -1,0 +1,13 @@
+﻿@using web_app_asp_net_mvc_database_first.Models
+@model GroupViewModel
+
+<h3>Группа</h3>
+
+@using (Html.BeginForm("Edit", "Groups", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+    @Html.EditorForModel()
+
+    <input type="submit" value="Сохранить" />
+    @Html.ActionLink("Отменить", "Index", "Groups")
+}
