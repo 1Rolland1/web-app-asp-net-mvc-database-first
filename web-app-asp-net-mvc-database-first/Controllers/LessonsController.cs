@@ -65,7 +65,7 @@ namespace web_app_asp_net_mvc_database_first.Controllers
         public ActionResult Edit(int id)
         {
             var db = new TimetableEntities();
-            var lesson = db.Lessons.FirstOrDefault(x => x.Id == id);
+            var lesson = MappingLessons(db.Lessons.Where(x=>x.Id == id).ToList()).FirstOrDefault(x => x.Id == id);
             if (lesson == null)
                 return RedirectPermanent("/Lessons/Index");
 
@@ -133,10 +133,13 @@ namespace web_app_asp_net_mvc_database_first.Controllers
                 TeacherId = x.TeacherId,
                 Teacher = x.Teachers,
                 Name = x.Name,
-                //Groups = x.Groups
+                Groups = x.Groups
+
             }).ToList();
 
             return result;
         }
+
+       
     }
 }

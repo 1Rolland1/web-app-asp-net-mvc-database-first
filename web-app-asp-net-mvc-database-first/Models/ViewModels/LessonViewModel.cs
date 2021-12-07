@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text.RegularExpressions;
+//using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using web_app_asp_net_mvc_database_first.Extensions;
@@ -39,7 +39,7 @@ namespace web_app_asp_net_mvc_database_first.Models
         /// Группа, у которой будет пара
         /// </summary> 
         [ScaffoldColumn(false)]
-        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Groups> Groups { get; set; }
 
         [ScaffoldColumn(false)]
         public List<int> GroupIds { get; set; }
